@@ -3,6 +3,7 @@ package com.quark.common.base;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  */
 public class BaseServiceImpl<E extends JpaRepository,T> implements BaseService<T>{
 
-    @Autowired
+    @Resource
     protected E repository;
 
     @Override

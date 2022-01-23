@@ -4,6 +4,7 @@ import com.quark.admin.service.AdminUserService;
 import com.quark.admin.service.PermissionService;
 import com.quark.admin.service.RoleService;
 import com.quark.common.base.BaseServiceImpl;
+import com.quark.common.dao.AdminUserDao;
 import com.quark.common.dao.RoleDao;
 import com.quark.common.dto.QuarkResult;
 import com.quark.common.entity.Permission;
@@ -29,14 +30,12 @@ import static java.util.stream.Collectors.toSet;
 public class RoleServiceImpl extends BaseServiceImpl<RoleDao, Role> implements RoleService {
 
     @Autowired
-    private AdminUserService userService;
+    private AdminUserDao userService;
 
-    @Autowired
-    private PermissionService permissionService;
 
     @Override
     public QuarkResult findRolesAndSelected(Integer id) {
-        Set<Role> userRole = userService.findOne(id).getRoles();
+        Set<Role> userRole = userService.findById(id).get().getRoles();
         List<Role> roles = findAll();
         for (Role r: roles) {
             if (userRole.contains(r)) {
