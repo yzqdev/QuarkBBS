@@ -4,8 +4,8 @@ import com.quark.common.dto.UploadResult;
 import com.quark.common.exception.ServiceProcessException;
 import com.quark.rest.service.UserService;
 import com.quark.rest.utils.FileUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,7 +16,7 @@ import java.io.IOException;
  * @Author LHR
  * Create By 2017/8/26
  */
-@Api(value = "文件上传接口",description = "图片上传")
+//@Api(value = "文件上传接口",description = "图片上传")
 @RestController
 @RequestMapping("/upload")
 public class UploadController {
@@ -24,7 +24,7 @@ public class UploadController {
     @Autowired
     private UserService userService;
 
-    @ApiOperation("图片上传接口")
+    //@ApiOperation("图片上传接口")
     @PostMapping("/image")
     public UploadResult upload(@RequestParam("file") MultipartFile file) {
         UploadResult result = null;
@@ -43,7 +43,7 @@ public class UploadController {
         return result;
     }
 
-    @ApiOperation("用户头像上传接口")
+    //@ApiOperation("用户头像上传接口")
     @PostMapping("/usericon/{token}")
     public UploadResult iconUpload(@PathVariable("token") String token,@RequestParam("file") MultipartFile file){
         UploadResult result = null;

@@ -74,26 +74,23 @@ public class PostsServiceImpl extends BaseServiceImpl<PostsDao, Posts> implement
         Sort sort =  Sort.by(orders);
         PageRequest pageable =  PageRequest.of(pageNo, length, sort);
 
-        Specification<Posts> specification = new Specification<Posts>() {
-            @Override
-            public Predicate toPredicate(Root<Posts> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-                Path<Boolean> $top = root.get("top");
-                Path<Boolean> $good = root.get("good");
-                Path<String> $title = root.get("title");
-                ArrayList<Predicate> list = new ArrayList<>();
-                if (type != null && type.equals("good")) {
-                    list.add(criteriaBuilder.equal($good, true));
-                }
-                if (type != null && type.equals("top")) {
-                    list.add(criteriaBuilder.equal($top, true));
-                }
-                if (search != null && search != "") {
-                    list.add(criteriaBuilder.like($title, "%" + search + "%"));
-                }
-
-                Predicate predicate = criteriaBuilder.and(list.toArray(new Predicate[list.size()]));
-                return predicate;
+        Specification<Posts> specification = (root, criteriaQuery, criteriaBuilder) -> {
+            Path<Boolean> $top = root.get("top");
+            Path<Boolean> $good = root.get("good");
+            Path<String> $title = root.get("title");
+            ArrayList<Predicate> list = new ArrayList<>();
+            if (type != null && type.equals("good")) {
+                list.add(criteriaBuilder.equal($good, true));
             }
+            if (type != null && type.equals("top")) {
+                list.add(criteriaBuilder.equal($top, true));
+            }
+            if (search != null && search != "") {
+                list.add(criteriaBuilder.like($title, "%" + search + "%"));
+            }
+
+            Predicate predicate = criteriaBuilder.and(list.toArray(new Predicate[list.size()]));
+            return predicate;
         };
         Page<Posts> page = repository.findAll(specification, pageable);
 

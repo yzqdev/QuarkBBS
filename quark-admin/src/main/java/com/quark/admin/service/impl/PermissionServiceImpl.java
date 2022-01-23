@@ -36,7 +36,7 @@ public class PermissionServiceImpl extends BaseServiceImpl<PermissionDao, Permis
     @Override
     public List<Permission> loadUserPermission(Integer id) {
         List<Permission> perlist = new ArrayList<>();
-        AdminUser user = adminUserDao.findOne(id);
+        AdminUser user = adminUserDao.findById(id).orElse(new AdminUser());
         if (user.getRoles().size() > 0) {
             user.getRoles().stream()
                     .filter(role -> role.getPermissions().size() > 0)
@@ -48,7 +48,7 @@ public class PermissionServiceImpl extends BaseServiceImpl<PermissionDao, Permis
     @Override
     public List<Permission> loadUserPermissionByType(Integer id, Integer type) {
         List<Permission> perlist = new ArrayList<>();
-        AdminUser user = adminUserDao.findOne(id);
+        AdminUser user = adminUserDao.findById(id).orElse(new AdminUser());
         if (user.getRoles().size() > 0) {
             user.getRoles().stream()
                     .filter(role -> role.getPermissions().size() > 0)

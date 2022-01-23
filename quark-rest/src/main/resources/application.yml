@@ -1,46 +1,54 @@
 logging:
-    level:
-        org:
-            springframework:
-                web: DEBUG
+  level:
+    org:
+      springframework:
+        web: DEBUG
 server:
-    port: 8081
-    tomcat:
-        uri-encoding: UTF-8
-    servlet:
-        encoding:
-            charset: UTF-8
-            enabled: true
-            force: true
+  port: 8081
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
 spring:
-    http:
-        multipart:
-            max-file-size: 2MB
-    redis:
-        host: 127.0.0.1
-        pool:
-            max-active: 8
-            max-idle: 8
-            max-wait: -1
-            min-idle: 0
-        port: 6379
-        timeout: 0
-    datasource:
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        initialSize: 5
-        maxActive: 20
-        maxWait: 60000
-        minIdle: 5
-        password: 123456
-        type: com.alibaba.druid.pool.DruidDataSource
-        url: jdbc:mysql://127.0.0.1:3306/quarkCommunity?useUnicode=true&characterEncoding=UTF-8&useSSL=false
-        username: root
-    jpa:
-        database: MYSQL
-        hibernate:
-            ddl-auto: update
-            naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
-        properties:
-            hibernate:
-                dialect: org.hibernate.dialect.MySQL5Dialect
-        show-sql: true
+
+  redis:
+    host: 127.0.0.1
+    jedis:
+      pool:
+
+        max-active: 8
+        max-idle: 8
+        max-wait: -1
+        min-idle: 0
+    port: 6379
+    timeout: 0
+
+  datasource:
+
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    initialSize: 5
+    maxActive: 20
+    maxWait: 60000
+    minIdle: 5
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1:3306/quarkCommunity?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+  jpa:
+    database: MYSQL
+    hibernate:
+      ddl-auto: update
+#      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+    show-sql: true
+  servlet:
+    multipart:
+      max-file-size: 2MB

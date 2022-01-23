@@ -4,8 +4,8 @@ import com.quark.common.base.BaseController;
 import com.quark.common.dto.QuarkResult;
 import com.quark.common.entity.Label;
 import com.quark.rest.service.LabelService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +18,7 @@ import java.util.List;
  * @Author LHR
  * Create By 2017/8/27
  */
-@Api(value = "标签接口",description = "获取标签")
+//@Api(value = "标签接口",description = "获取标签")
 @RestController
 @RequestMapping("/label")
 public class LabelController extends BaseController{
@@ -27,7 +27,7 @@ public class LabelController extends BaseController{
     private LabelService labelService;
 
 
-    @ApiOperation("获取标签")
+    //@ApiOperation("获取标签")
     @GetMapping
     public QuarkResult getAllLabel(){
 

@@ -16,7 +16,7 @@ import java.util.List;
 @CacheConfig(cacheNames = "roles")
 public interface RoleDao extends JpaRepository<Role,Integer>{
 
-    Role findOne(Integer integer);
+
 
     @Cacheable
     List<Role> findAll();

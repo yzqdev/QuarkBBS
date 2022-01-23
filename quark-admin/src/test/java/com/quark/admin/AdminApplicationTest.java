@@ -2,6 +2,7 @@ package com.quark.admin;
 
 import com.quark.admin.service.*;
 import com.quark.common.dao.AdminUserDao;
+import com.quark.common.entity.AdminUser;
 import com.quark.common.entity.Posts;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,7 +47,7 @@ public class AdminApplicationTest {
 
     @Test
     public void testDataSource() {
-       System.out.println(dao.findOne(3));
+       System.out.println(dao.findById(3).orElse(new AdminUser()));
 
     }
 

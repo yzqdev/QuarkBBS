@@ -44,14 +44,10 @@ public class ReplyServiceImpl extends BaseServiceImpl<ReplyDao, Reply> implement
         Sort sort =   Sort.by(order);
         PageRequest pageable =  PageRequest.of(pageNo, length, sort);
 
-        Specification<Reply> specification = new Specification<Reply>() {
-
-            @Override
-            public Predicate toPredicate(Root<Reply> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-                Path<Integer> $posts = root.get("posts");
-                Predicate predicate = criteriaBuilder.and(criteriaBuilder.equal($posts, postsId));
-                return predicate;
-            }
+        Specification<Reply> specification = (root, criteriaQuery, criteriaBuilder) -> {
+            Path<Integer> $posts = root.get("posts");
+            Predicate predicate = criteriaBuilder.and(criteriaBuilder.equal($posts, postsId));
+            return predicate;
         };
         Page<Reply> page = repository.findAll(specification, pageable);
         return page;

@@ -36,7 +36,9 @@ public class RedisService<T> {
     public T getStringAndUpDate(String key,int time){
         ValueOperations<String, T> operations = redisTemplate.opsForValue();
         T t = operations.get(key);
-        if (t!=null) operations.set(key,t,time, TimeUnit.HOURS);
+        if (t!=null) {
+            operations.set(key,t,time, TimeUnit.HOURS);
+        }
         return t;
     }
 

@@ -1,37 +1,50 @@
 logging:
-    level:
-        org:
-            springframework:
-                web: DEBUG
+  level:
+    org:
+      springframework:
+        web: DEBUG
 server:
-    port: 8082
-    servlet:
-        encoding:
-            charset: UTF-8
-            enabled: true
-            force: true
-    tomcat:
-        uri-encoding: UTF-8
+  port: 8082
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
 spring:
-    datasource:
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        initialSize: 5
-        maxActive: 20
-        maxWait: 60000
-        minIdle: 5
-        password: 123456
-        type: com.alibaba.druid.pool.DruidDataSource
-        url: jdbc:mysql://127.0.0.1:3306/quarkCommunity?useUnicode=true&characterEncoding=UTF-8&useSSL=false
-        username: root
-    jpa:
-        database: MYSQL
-        hibernate:
-            ddl-auto: update
-            naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
-        properties:
-            hibernate:
-                dialect: org.hibernate.dialect.MySQL5Dialect
-        show-sql: true
-    thymeleaf:
-        cache: false
-        mode: HTML
+
+  redis:
+    host: 127.0.0.1
+    jedis:
+      pool:
+
+        max-active: 8
+        max-idle: 8
+        max-wait: -1
+        min-idle: 0
+    port: 6379
+    timeout: 0
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1:3306/quarkCommunity?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    druid:
+      initial-size: 5
+      max-active: 30
+      max-wait: 60000
+      min-idle: 5
+  jpa:
+    database: MYSQL
+    hibernate:
+      ddl-auto: update
+
+    show-sql: true
+  servlet:
+    multipart:
+      max-file-size: 2MB

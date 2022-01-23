@@ -21,7 +21,9 @@ public class FileUtils {
             String userUploadPath = today + "/";
             String fileName = UUID.randomUUID().toString()+suffix;
             File file_dir = new File(Constants.UPLOAD_PATH + userUploadPath);
-            if (!file_dir.exists()) file_dir.mkdirs();
+            if (!file_dir.exists()) {
+                file_dir.mkdirs();
+            }
 
             BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(Constants.UPLOAD_PATH + userUploadPath + fileName)));
             stream.write(file.getBytes());
