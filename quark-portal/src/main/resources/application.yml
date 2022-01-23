@@ -1,0 +1,37 @@
+logging:
+    level:
+        org:
+            springframework:
+                web: DEBUG
+server:
+    port: 8082
+    servlet:
+        encoding:
+            charset: UTF-8
+            enabled: true
+            force: true
+    tomcat:
+        uri-encoding: UTF-8
+spring:
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        initialSize: 5
+        maxActive: 20
+        maxWait: 60000
+        minIdle: 5
+        password: 123456
+        type: com.alibaba.druid.pool.DruidDataSource
+        url: jdbc:mysql://127.0.0.1:3306/quarkCommunity?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+        username: root
+    jpa:
+        database: MYSQL
+        hibernate:
+            ddl-auto: update
+            naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL5Dialect
+        show-sql: true
+    thymeleaf:
+        cache: false
+        mode: HTML

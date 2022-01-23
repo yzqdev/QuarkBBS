@@ -39,7 +39,9 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleDao, Role> implements R
         Set<Role> userRole = userService.findOne(id).getRoles();
         List<Role> roles = findAll();
         for (Role r: roles) {
-            if (userRole.contains(r)) r.setSelected(1);
+            if (userRole.contains(r)) {
+                r.setSelected(1);
+            }
         }
 
         return QuarkResult.ok(roles);
@@ -47,7 +49,7 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleDao, Role> implements R
 
     @Override
     public Page<Role> findByPage(int pageNo, int length) {
-        PageRequest pageRequest = new PageRequest(pageNo, length);
+        PageRequest pageRequest =  PageRequest.of(pageNo, length);
         Page<Role> page = repository.findAll(pageRequest);
         return page;
     }

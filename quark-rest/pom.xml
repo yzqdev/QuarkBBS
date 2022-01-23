@@ -5,12 +5,11 @@
     <parent>
         <artifactId>quark-parent</artifactId>
         <groupId>com.quark</groupId>
-        <version>1.0-SNAPSHOT</version>
-        <relativePath>../quark-parent/pom.xml</relativePath>
+        <version>1.0.2</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.quark</groupId>
     <artifactId>quark-rest</artifactId>
     <packaging>jar</packaging>
 
@@ -19,7 +18,7 @@
     <dependency>
         <groupId>com.quark</groupId>
         <artifactId>quark-common</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.2</version>
     </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -5,21 +5,20 @@
     <parent>
         <artifactId>quark-parent</artifactId>
         <groupId>com.quark</groupId>
-        <version>1.0-SNAPSHOT</version>
-        <relativePath>../quark-parent/pom.xml</relativePath>
+        <version>1.0.2</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.quark</groupId>
     <artifactId>quark-chat</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.2</version>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
             <groupId>com.quark</groupId>
             <artifactId>quark-common</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0.2</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -39,13 +38,11 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.23</version>
         </dependency>
         <!--Netty-->
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
-            <version>[4.1.42,)</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

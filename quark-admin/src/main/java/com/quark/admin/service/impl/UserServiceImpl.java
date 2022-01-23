@@ -23,27 +23,30 @@ public class UserServiceImpl extends BaseServiceImpl<UserDao,User> implements Us
 
     @Override
     public Page<User> findByPage(User user, int pageNo, int length) {
-        PageRequest pageable = new PageRequest(pageNo, length);
+        PageRequest pageable =   PageRequest.of(pageNo, length);
 
-        Specification<User> specification = new Specification<User>() {
-            @Override
-            public Predicate toPredicate(Root root, CriteriaQuery criteriaQuery, CriteriaBuilder criteriaBuilder) {
-                Path<Integer> $id = root.get("id");
-                Path<String> $username = root.get("username");
-                Path<String> $email = root.get("email");
-                Path<Integer> $enable = root.get("enable");
+        Specification<User> specification = (root, criteriaQuery, criteriaBuilder) -> {
+            Path<Integer> $id = root.get("id");
+            Path<String> $username = root.get("username");
+            Path<String> $email = root.get("email");
+            Path<Integer> $enable = root.get("enable");
 
-                ArrayList<Predicate> list = new ArrayList<>();
-                if (user.getId() != null) list.add(criteriaBuilder.equal($id, user.getId()));
-                if (user.getEnable() != null) list.add(criteriaBuilder.equal($enable, user.getEnable()));
-                if (user.getUsername() != null)
-                    list.add(criteriaBuilder.like($username, "%" + user.getUsername() + "%"));
-                if (user.getEmail()!=null)
-                    list.add(criteriaBuilder.like($email, "%" + user.getEmail() + "%"));
-
-                Predicate predicate = criteriaBuilder.and(list.toArray(new Predicate[list.size()]));
-                return predicate;
+            ArrayList<Predicate> list = new ArrayList<>();
+            if (user.getId() != null) {
+                list.add(criteriaBuilder.equal($id, user.getId()));
             }
+            if (user.getEnable() != null) {
+                list.add(criteriaBuilder.equal($enable, user.getEnable()));
+            }
+            if (user.getUsername() != null) {
+                list.add(criteriaBuilder.like($username, "%" + user.getUsername() + "%"));
+            }
+            if (user.getEmail()!=null) {
+                list.add(criteriaBuilder.like($email, "%" + user.getEmail() + "%"));
+            }
+
+            Predicate predicate = criteriaBuilder.and(list.toArray(new Predicate[list.size()]));
+            return predicate;
         };
         Page<User> page = repository.findAll(specification, pageable);
 

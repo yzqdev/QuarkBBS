@@ -17,11 +17,8 @@ public class RestApplication {
 
     public static void main(String[] args) throws IOException {
         //更改properties配置文件名称,避免依赖冲突
-        Properties properties = new Properties();
-        InputStream in = RestApplication.class.getClassLoader().getResourceAsStream("rest.properties");
-        properties.load(in);
+
         SpringApplication app = new SpringApplication(RestApplication.class);
-        app.setDefaultProperties(properties);
         app.run(args);
     }
 

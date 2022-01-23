@@ -22,6 +22,7 @@ import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @Author LHR
@@ -36,13 +37,15 @@ public class PostsServiceImpl extends BaseServiceImpl<PostsDao, Posts> implement
     @Autowired
     private UserDao userDao;
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void savePosts(Posts posts, Integer labelId, User user) {
         try {
-            Label label = labelDao.findOne(labelId);
+            Label label = labelDao.findById(labelId).get();
 
-            if (label == null) throw new ServiceProcessException("标签不存在!");
+            if (label == null) {
+                throw new ServiceProcessException("标签不存在!");
+            }
             //标签的帖子数量+1
             Integer postsCount = label.getPostsCount();
             label.setPostsCount(++postsCount);
@@ -68,8 +71,8 @@ public class PostsServiceImpl extends BaseServiceImpl<PostsDao, Posts> implement
         orders.add(new Sort.Order(Sort.Direction.DESC, "id"));
 
 
-        Sort sort = new Sort(orders);
-        PageRequest pageable = new PageRequest(pageNo, length, sort);
+        Sort sort =  Sort.by(orders);
+        PageRequest pageable =  PageRequest.of(pageNo, length, sort);
 
         Specification<Posts> specification = new Specification<Posts>() {
             @Override
@@ -78,9 +81,15 @@ public class PostsServiceImpl extends BaseServiceImpl<PostsDao, Posts> implement
                 Path<Boolean> $good = root.get("good");
                 Path<String> $title = root.get("title");
                 ArrayList<Predicate> list = new ArrayList<>();
-                if (type != null && type.equals("good")) list.add(criteriaBuilder.equal($good, true));
-                if (type != null && type.equals("top")) list.add(criteriaBuilder.equal($top, true));
-                if (search != null && search != "") list.add(criteriaBuilder.like($title, "%" + search + "%"));
+                if (type != null && type.equals("good")) {
+                    list.add(criteriaBuilder.equal($good, true));
+                }
+                if (type != null && type.equals("top")) {
+                    list.add(criteriaBuilder.equal($top, true));
+                }
+                if (search != null && search != "") {
+                    list.add(criteriaBuilder.like($title, "%" + search + "%"));
+                }
 
                 Predicate predicate = criteriaBuilder.and(list.toArray(new Predicate[list.size()]));
                 return predicate;
@@ -93,8 +102,8 @@ public class PostsServiceImpl extends BaseServiceImpl<PostsDao, Posts> implement
 
     @Override
     public List<Posts> getPostsByUser(User user) {
-        Sort sort = new Sort(new Sort.Order(Sort.Direction.DESC, "initTime"));
-        Pageable pageable = new PageRequest(0, 10, sort);
+        Sort sort =  Sort.by(new Sort.Order(Sort.Direction.DESC, "initTime"));
+        Pageable pageable =  PageRequest.of(0, 10, sort);
         Page<Posts> page = repository.findByUser(user, pageable);
         return page.getContent();
     }
@@ -104,8 +113,8 @@ public class PostsServiceImpl extends BaseServiceImpl<PostsDao, Posts> implement
         List<Sort.Order> orders = new ArrayList<>();
         orders.add(new Sort.Order(Sort.Direction.DESC, "top"));
         orders.add(new Sort.Order(Sort.Direction.DESC, "id"));
-        Sort sort = new Sort(orders);
-        Pageable pageable = new PageRequest(pageNo, lenght, sort);
+        Sort sort =  Sort.by(orders);
+        Pageable pageable =  PageRequest.of(pageNo, lenght, sort);
         Page<Posts> postss = repository.findByLabel(label, pageable);
         return postss;
     }

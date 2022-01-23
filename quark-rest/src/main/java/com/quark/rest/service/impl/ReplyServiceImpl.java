@@ -41,8 +41,8 @@ public class ReplyServiceImpl extends BaseServiceImpl<ReplyDao, Reply> implement
     @Override
     public Page<Reply> getReplyByPage(Integer postsId, int pageNo, int length) {
         Sort.Order order = new Sort.Order(Sort.Direction.ASC, "id");
-        Sort sort = new Sort(order);
-        PageRequest pageable = new PageRequest(pageNo, length, sort);
+        Sort sort =   Sort.by(order);
+        PageRequest pageable =  PageRequest.of(pageNo, length, sort);
 
         Specification<Reply> specification = new Specification<Reply>() {
 
@@ -58,13 +58,15 @@ public class ReplyServiceImpl extends BaseServiceImpl<ReplyDao, Reply> implement
     }
 
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void saveReply(Reply reply, Integer postsId, User user) {
         try {
-            Posts posts = postsDao.findOne(postsId);
+            Posts posts = postsDao.findById(postsId).orElse(new Posts());
 
-            if (posts == null) throw new ServiceProcessException("帖子不存在!");
+            if (posts == null) {
+                throw new ServiceProcessException("帖子不存在!");
+            }
 
             //帖子回复数+1
             int count = posts.getReplyCount();
@@ -78,7 +80,7 @@ public class ReplyServiceImpl extends BaseServiceImpl<ReplyDao, Reply> implement
             repository.save(reply);
 
             //判断是否是自问自回，如果是则不通知
-            if (posts.getUser().getId()!=user.getId()) {
+            if (!posts.getUser().getId().equals(user.getId())) {
                 //向消息表中增加信息
                 Notification notification = new Notification();
                 notification.setPosts(posts);

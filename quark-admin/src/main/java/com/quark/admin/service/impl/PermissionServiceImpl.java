@@ -40,9 +40,7 @@ public class PermissionServiceImpl extends BaseServiceImpl<PermissionDao, Permis
         if (user.getRoles().size() > 0) {
             user.getRoles().stream()
                     .filter(role -> role.getPermissions().size() > 0)
-                    .forEach(role -> {
-                        perlist.addAll(role.getPermissions().stream().filter(p -> p.getParentid() > 0).collect(Collectors.toList()));
-                    });
+                    .forEach(role -> perlist.addAll(role.getPermissions().stream().filter(p -> p.getParentid() > 0).toList()));
         }
         return perlist;
     }
@@ -54,11 +52,8 @@ public class PermissionServiceImpl extends BaseServiceImpl<PermissionDao, Permis
         if (user.getRoles().size() > 0) {
             user.getRoles().stream()
                     .filter(role -> role.getPermissions().size() > 0)
-                    .forEach(role -> {
-                        perlist.addAll(role.getPermissions().stream().filter(p ->p.getParentid() > 0 && p.getType() == type)
-                                .sorted(Comparator.comparing(Permission::getSort))
-                                .collect(Collectors.toList()));
-                    });
+                    .forEach(role -> perlist.addAll(role.getPermissions().stream().filter(p -> p.getParentid() > 0 && p.getType().equals(type))
+                            .sorted(Comparator.comparing(Permission::getSort)).toList()));
         }
 
         return perlist;
@@ -69,8 +64,11 @@ public class PermissionServiceImpl extends BaseServiceImpl<PermissionDao, Permis
         Set<Permission> permissions = roleService.findOne(id).getPermissions();
         List<Permission> all = repository.findAll();
         for (Permission p: all) {
-            if (permissions.contains(p)) p.setChecked("true");
-            else p.setChecked("false");
+            if (permissions.contains(p)) {
+                p.setChecked("true");
+            } else {
+                p.setChecked("false");
+            }
         }
         return all;
     }
@@ -78,8 +76,8 @@ public class PermissionServiceImpl extends BaseServiceImpl<PermissionDao, Permis
     @Override
     public Page<Permission> findByPage(int pageNo, int length) {
         Sort.Order order = new Sort.Order(Sort.Direction.ASC, "sort");
-        Sort sort = new Sort(order);
-        PageRequest pageRequest = new PageRequest(pageNo, length,sort);
+        Sort sort =   Sort.by(order);
+        PageRequest pageRequest =  PageRequest.of(pageNo, length,sort);
         Page<Permission> page = repository.findAll(pageRequest);
         return page;
     }

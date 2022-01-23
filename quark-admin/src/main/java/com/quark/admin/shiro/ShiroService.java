@@ -40,7 +40,7 @@ public class ShiroService {
         List<Permission> permissionList = permissionService.findAll();
         for(Permission p:permissionList){
 
-            if (!StringUtils.isEmpty(p.getPerurl())) {
+            if ( StringUtils.hasText(p.getPerurl())) {
                 String permission = "perms[" + p.getPerurl()+ "]";
                 filterChainDefinitionMap.put(p.getPerurl(),permission);
             }

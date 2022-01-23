@@ -5,8 +5,8 @@
     <parent>
         <artifactId>quark-parent</artifactId>
         <groupId>com.quark</groupId>
-        <version>1.0-SNAPSHOT</version>
-        <relativePath>../quark-parent/pom.xml</relativePath>
+        <version>1.0.2</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -36,7 +36,6 @@
         <dependency>
             <groupId>net.sourceforge.nekohtml</groupId>
             <artifactId>nekohtml</artifactId>
-            <version>1.9.15</version>
         </dependency>
         <!-- httpclient -->
         <dependency>

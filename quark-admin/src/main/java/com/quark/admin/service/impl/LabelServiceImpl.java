@@ -18,7 +18,7 @@ public class LabelServiceImpl extends BaseServiceImpl<LabelDao,Label> implements
 
     @Override
     public Page<Label> findByPage(int pageNo, int length) {
-        PageRequest pageRequest = new PageRequest(pageNo, length);
+        PageRequest pageRequest =   PageRequest.of(pageNo, length);
         Page<Label> page = repository.findAll(pageRequest);
         return page;
     }

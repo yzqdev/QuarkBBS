@@ -23,25 +23,27 @@ public class ReplyServiceImpl extends BaseServiceImpl<ReplyDao,Reply> implements
 
     @Override
     public Page<Reply> findByPage(Reply reply, int pageNo, int length) {
-        PageRequest pageable = new PageRequest(pageNo, length);
+        PageRequest pageable = PageRequest.of(pageNo, length);
 
-        Specification<Posts> specification = new Specification<Posts>(){
+        Specification<Posts> specification = (root, criteriaQuery, criteriaBuilder) -> {
+            Path<Integer> $id = root.get("id");
+            Path<String> $content = root.get("content");
+            Path<User> $user = root.get("user");
 
-            @Override
-            public Predicate toPredicate(Root<Posts> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-                Path<Integer> $id = root.get("id");
-                Path<String> $content = root.get("content");
-                Path<User> $user = root.get("user");
-
-                ArrayList<Predicate> list = new ArrayList<>();
-                if (reply.getId()!=null) list.add(criteriaBuilder.equal($id,reply.getId()));
-                if (reply.getContent()!=null) list.add(criteriaBuilder.like($content,"%" + reply.getContent() + "%"));
-                if (reply.getUser()!=null) list.add(criteriaBuilder.equal($user,reply.getUser()));
-
-                Predicate predicate = criteriaBuilder.and(list.toArray(new Predicate[list.size()]));
-
-                return predicate;
+            ArrayList<Predicate> list = new ArrayList<>();
+            if (reply.getId()!=null) {
+                list.add(criteriaBuilder.equal($id,reply.getId()));
             }
+            if (reply.getContent()!=null) {
+                list.add(criteriaBuilder.like($content,"%" + reply.getContent() + "%"));
+            }
+            if (reply.getUser()!=null) {
+                list.add(criteriaBuilder.equal($user,reply.getUser()));
+            }
+
+            Predicate predicate = criteriaBuilder.and(list.toArray(new Predicate[list.size()]));
+
+            return predicate;
         };
         Page<Reply> page = repository.findAll(specification, pageable);
         return page;

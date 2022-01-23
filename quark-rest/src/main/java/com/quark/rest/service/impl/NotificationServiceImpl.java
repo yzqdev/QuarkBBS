@@ -33,6 +33,6 @@ public class NotificationServiceImpl extends BaseServiceImpl<NotificationDao,Not
     @Override
     public void deleteByUser(User user) {
         List<Notification> list = repository.getByTouserOrderByInitTimeDesc(user);
-        repository.deleteInBatch(list);
+        repository.deleteAllInBatch(list);
     }
 }

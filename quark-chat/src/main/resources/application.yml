@@ -1,0 +1,15 @@
+logging:
+    level:
+        org:
+            springframework:
+                web: DEBUG
+spring:
+    redis:
+        host: 127.0.0.1
+        pool:
+            max-active: 8
+            max-idle: 8
+            max-wait: -1
+            min-idle: 0
+        port: 6379
+        timeout: 0

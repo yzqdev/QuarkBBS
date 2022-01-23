@@ -36,25 +36,26 @@ public class AdminUserServiceImpl extends BaseServiceImpl<AdminUserDao, AdminUse
 
     @Override
     public Page<AdminUser> findByPage(AdminUser adminUser, int pageNo, int length) {
-        PageRequest pageable = new PageRequest(pageNo, length);
+        PageRequest pageable =  PageRequest.of(pageNo, length);
 
-        Specification<AdminUser> specification = new Specification<AdminUser>() {
+        Specification<AdminUser> specification = (root, criteriaQuery, criteriaBuilder) -> {
+            Path<Integer> $id = root.get("id");
+            Path<String> $username = root.get("username");
+            Path<Integer> $enable = root.get("enable");
 
-            @Override
-            public Predicate toPredicate(Root<AdminUser> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-                Path<Integer> $id = root.get("id");
-                Path<String> $username = root.get("username");
-                Path<Integer> $enable = root.get("enable");
-
-                ArrayList<Predicate> list = new ArrayList<>();
-                if (adminUser.getId() != null) list.add(criteriaBuilder.equal($id, adminUser.getId()));
-                if (adminUser.getEnable() != null) list.add(criteriaBuilder.equal($enable, adminUser.getEnable()));
-                if (adminUser.getUsername() != null)
-                    list.add(criteriaBuilder.like($username, "%" + adminUser.getUsername() + "%"));
-
-                Predicate predicate = criteriaBuilder.and(list.toArray(new Predicate[list.size()]));
-                return predicate;
+            ArrayList<Predicate> list = new ArrayList<>();
+            if (adminUser.getId() != null) {
+                list.add(criteriaBuilder.equal($id, adminUser.getId()));
             }
+            if (adminUser.getEnable() != null) {
+                list.add(criteriaBuilder.equal($enable, adminUser.getEnable()));
+            }
+            if (adminUser.getUsername() != null) {
+                list.add(criteriaBuilder.like($username, "%" + adminUser.getUsername() + "%"));
+            }
+
+            Predicate predicate = criteriaBuilder.and(list.toArray(new Predicate[list.size()]));
+            return predicate;
         };
 
         Page<AdminUser> page = repository.findAll(specification, pageable);
