@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+
 /**
  * @Author LHR
  * Create By 2017/8/30
@@ -24,13 +26,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/reply")
 public class ReplyController extends BaseController{
 
-    @Autowired
+    @Resource
     private WebSocketController webSocketController;
 
-    @Autowired
+    @Resource
     private UserService userService;
 
-    @Autowired
+    @Resource
     private ReplyService replyService;
     //@ApiOperation("发布回复接口")
     //@ApiImplicitParams({

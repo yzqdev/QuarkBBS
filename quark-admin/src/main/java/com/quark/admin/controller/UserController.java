@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController extends BaseController{
 
-    @Autowired
+    @Resource
     private UserService userService;
 
     @GetMapping

@@ -18,6 +18,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,10 +32,10 @@ import java.util.Optional;
 @Service
 public class PostsServiceImpl extends BaseServiceImpl<PostsDao, Posts> implements PostsService {
 
-    @Autowired
+    @Resource
     private LabelDao labelDao;
 
-    @Autowired
+    @Resource
     private UserDao userDao;
 
     @Transactional(rollbackFor = Exception.class)

@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 /**
@@ -24,25 +25,25 @@ import javax.sql.DataSource;
 @SpringBootTest
 public class AdminApplicationTest {
 
-    @Autowired
+    @Resource
     DataSource dataSource;
 
-    @Autowired(required=true)
+    @Resource
     AdminUserService adminUserService;
 
-    @Autowired(required=true)
+    @Resource
     PermissionService permissionService;
 
-    @Autowired(required=true)
+    @Resource
     RoleService roleService;
 
-    @Autowired
+    @Resource
     AdminUserDao dao;
 
-    @Autowired
+    @Resource
     UserService userService;
 
-    @Autowired
+    @Resource
     PostsService postsService;
 
     @Test

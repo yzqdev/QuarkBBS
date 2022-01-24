@@ -6,6 +6,7 @@ import com.quark.rest.service.RankService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -14,10 +15,10 @@ import java.util.List;
  */
 @Service
 public class RankServiceImpl  implements RankService{
-    @Autowired
+    @Resource
     private PostsDao postsDao;
 
-    @Autowired
+    @Resource
     private UserDao userDao;
 
     @Override

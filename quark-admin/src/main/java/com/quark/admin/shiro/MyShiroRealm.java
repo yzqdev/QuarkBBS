@@ -54,15 +54,18 @@ public class MyShiroRealm extends AuthorizingRealm {
         //获取用户的输入的账号.
         String username = (String)token.getPrincipal();
         AdminUser user = adminUserService.findByUserName(username);
-        if(user==null) throw new UnknownAccountException();
+        if(user==null) {
+            throw new UnknownAccountException();
+        }
         if (0==user.getEnable()) {
-            throw new LockedAccountException(); // 帐号锁定
+            // 帐号锁定
+            throw new LockedAccountException();
         }
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
-                user.getId(), //用户
-                user.getPassword(), //密码
+                user.getId(),
+                user.getPassword(),
                 ByteSource.Util.bytes(username),
-                getName() //realm name
+                getName()
         );
         // 把用户信息放在session里
         Session session = SecurityUtils.getSubject().getSession();

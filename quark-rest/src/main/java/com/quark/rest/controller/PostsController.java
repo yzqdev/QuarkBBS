@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 
 /**
@@ -29,16 +30,16 @@ import java.util.HashMap;
 @RequestMapping("/posts")
 public class PostsController extends BaseController {
 
-    @Autowired
+    @Resource
     private UserService userService;
 
-    @Autowired
+    @Resource
     private LabelService labelService;
 
-    @Autowired
+    @Resource
     private PostsService postsService;
 
-    @Autowired
+    @Resource
     private ReplyService replyService;
 
     //@ApiOperation("发帖接口")

@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.annotation.Resource;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -53,13 +54,13 @@ public class QuarkChatServer implements Server {
     @Value("${PORT}")
     private int port;
 
-    @Autowired
+    @Resource
     private UserAuthHandler authHandler;
 
-    @Autowired
+    @Resource
     private MessageHandler messageHandler;
 
-    @Autowired
+    @Resource
     private ChannelManager manager;
 
     @PostConstruct

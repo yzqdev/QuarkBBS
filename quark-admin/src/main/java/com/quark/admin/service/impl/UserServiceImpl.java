@@ -18,7 +18,7 @@ import java.util.List;
  * @Author LHR
  * Create By 2017/8/25
  */
-@Service
+@Service("admin-userService")
 public class UserServiceImpl extends BaseServiceImpl<UserDao,User> implements UserService {
 
     @Override

@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
+import java.time.Duration;
+
 /**
  * Created by lhr on 17-8-1.
  */
@@ -37,8 +39,7 @@ public class RedisConfig extends CachingConfigurerSupport {
         log.info("redis地址：" + host + ":" + port);
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
         jedisPoolConfig.setMaxIdle(maxIdle);
-        //jedisPoolConfig.setMaxWaitMillis(maxWaitMillis);
-
+        jedisPoolConfig.setMaxWait(Duration.ofMillis(maxWaitMillis));
         JedisPool jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout);
 
         return jedisPool;

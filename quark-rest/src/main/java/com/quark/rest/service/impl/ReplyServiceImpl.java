@@ -19,6 +19,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import javax.persistence.criteria.*;
 import java.util.Date;
 
@@ -29,13 +30,13 @@ import java.util.Date;
 @Service
 public class ReplyServiceImpl extends BaseServiceImpl<ReplyDao, Reply> implements ReplyService {
 
-    @Autowired
+    @Resource
     private PostsDao postsDao;
 
-    @Autowired
+    @Resource
     private NotificationService notificationService;
 
-    @Autowired
+    @Resource
     private WebSocketService webSocketService;
 
     @Override

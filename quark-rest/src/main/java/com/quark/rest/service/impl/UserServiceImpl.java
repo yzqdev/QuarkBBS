@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
@@ -23,10 +24,10 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class UserServiceImpl extends BaseServiceImpl<UserDao, User> implements UserService {
 
-    @Autowired
+    @Resource
     private RedisService<Integer> redisSocketService;
 
-    @Autowired
+    @Resource
     private RedisService<User> redisService;
 
     @Value("${REDIS_USERID_KEY}")

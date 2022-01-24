@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 /**
  * @Author : ChinaLHR
  * @Date : Create in 21:22 2017/10/23
@@ -17,7 +19,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ChatServiceImpl extends BaseServiceImpl<UserDao,User> implements ChatService{
 
-    @Autowired
+    @Resource
     private RedisService<User> redisService;
 
     @Value("${REDIS_USER_KEY}")

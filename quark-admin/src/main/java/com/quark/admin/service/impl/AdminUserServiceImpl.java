@@ -14,6 +14,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import javax.persistence.criteria.*;
 import java.util.*;
 
@@ -23,10 +24,10 @@ import static java.util.stream.Collectors.toSet;
  * Created by lhr on 17-8-1.
  */
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class AdminUserServiceImpl extends BaseServiceImpl<AdminUserDao, AdminUser> implements AdminUserService {
 
-    @Autowired
+    @Resource
     private RoleService roleService;
 
     @Override

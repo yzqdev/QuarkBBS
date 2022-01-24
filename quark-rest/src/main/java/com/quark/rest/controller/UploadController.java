@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 
 /**
@@ -21,7 +22,7 @@ import java.io.IOException;
 @RequestMapping("/upload")
 public class UploadController {
 
-    @Autowired
+    @Resource
     private UserService userService;
 
     //@ApiOperation("图片上传接口")

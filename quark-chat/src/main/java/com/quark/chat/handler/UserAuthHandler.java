@@ -21,6 +21,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+
 import static com.quark.chat.protocol.QuarkChatType.*;
 
 /**
@@ -42,7 +44,7 @@ public class UserAuthHandler extends SimpleChannelInboundHandler {
     @Value("${WEBSOCKET_URL}")
     private String WEBSOCKET_URL;
 
-    @Autowired
+    @Resource
     private ChannelManager manager;
 
     @Override

@@ -6,29 +6,27 @@ import com.quark.admin.shiro.MyShiroRealm;
 import com.quark.common.entity.Permission;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
-import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
-import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
+import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.LinkedHashMap;
+import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by lhr on 17-8-1.
  */
 @Configuration
 public class ShiroConfig {
-    @Autowired
+    @Resource(name = "permissionService")
     private PermissionService permissionService;
 
     @Value("${spring.redis.host}")
@@ -50,10 +48,6 @@ public class ShiroConfig {
         return mShiroRealm;
     }
 
-    @Bean
-    public static LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
-        return new LifecycleBeanPostProcessor();
-    }
 
 
     /**
@@ -67,52 +61,51 @@ public class ShiroConfig {
     }
 
     /**
+     *
      * 处理拦截资源文件问题。
      *
-     * @param securityManager
-     * @return
+     * @return {@link ShiroFilterChainDefinition}
      */
     @Bean
-    public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
-        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+    public ShiroFilterChainDefinition shirFilter( ) {
+        DefaultShiroFilterChainDefinition filterChainDefinitionMap= new DefaultShiroFilterChainDefinition();
 
         // 设置 SecurityManager
-        shiroFilterFactoryBean.setSecurityManager(securityManager);
-
-        // 如果不设置默认会自动寻找Web工程根目录下的"/login.html"页面
-        shiroFilterFactoryBean.setLoginUrl("/login");
-        // 登录成功后要跳转的链接
-        shiroFilterFactoryBean.setSuccessUrl("/initPage");
-        //未授权界面
-        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+        //shiroFilterFactoryBean.setSecurityManager(securityManager);
+        //
+        //// 如果不设置默认会自动寻找Web工程根目录下的"/login.html"页面
+        //shiroFilterFactoryBean.setLoginUrl("/login");
+        //// 登录成功后要跳转的链接
+        //shiroFilterFactoryBean.setSuccessUrl("/initPage");
+        ////未授权界面
+        //shiroFilterFactoryBean.setUnauthorizedUrl("/403");
         //拦截器.
-        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-        filterChainDefinitionMap.put("/favicon.png","anon");//解决弹出favicon.ico下载
-        filterChainDefinitionMap.put("/logout", "logout");
-        filterChainDefinitionMap.put("/css/**", "anon");
-        filterChainDefinitionMap.put("/js/**", "anon");
-        filterChainDefinitionMap.put("/img/**", "anon");
-        filterChainDefinitionMap.put("/font-awesome/**", "anon");
+
+        filterChainDefinitionMap.addPathDefinition("/favicon.png","anon");//解决弹出favicon.ico下载
+        filterChainDefinitionMap.addPathDefinition("/logout", "logout");
+        filterChainDefinitionMap.addPathDefinition("/css/**", "anon");
+        filterChainDefinitionMap.addPathDefinition("/js/**", "anon");
+        filterChainDefinitionMap.addPathDefinition("/img/**", "anon");
+        filterChainDefinitionMap.addPathDefinition("/font-awesome/**", "anon");
 
         //自定义加载权限资源关系
         List<Permission> list = permissionService.findAll();
         for (Permission p : list) {
             if (!p.getPerurl().isEmpty()) {
                 String permission = "perms[" + p.getPerurl() + "]";
-                filterChainDefinitionMap.put(p.getPerurl(), permission);
+                filterChainDefinitionMap.addPathDefinition(p.getPerurl(), permission);
             }
         }
 
 
         //过滤链定义，从上向下顺序执行，一般将 /**放在最为下边
-        filterChainDefinitionMap.put("/**", "authc");
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
-        return shiroFilterFactoryBean;
+        filterChainDefinitionMap.addPathDefinition("/**", "authc");
+        return filterChainDefinitionMap;
     }
 
 
     @Bean
-    public SecurityManager securityManager() {
+    public DefaultWebSecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         //设置realm.
         securityManager.setRealm(getMyShiroRealm());
@@ -156,8 +149,8 @@ public class ShiroConfig {
     public RedisManager redisManager() {
         RedisManager redisManager = new RedisManager();
         redisManager.setHost(host);
-//        redisManager.setPassword(password);
-        redisManager.setTimeout(1800);// 配置缓存过期时间
+        redisManager.setPassword(password);
+        // 配置缓存过期时间
         redisManager.setTimeout(timeout);
         return redisManager;
     }

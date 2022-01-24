@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -23,13 +24,13 @@ import java.util.stream.Collectors;
 /**
  * Created by lhr on 17-8-1.
  */
-@Service
-@Transactional
+@Service("permissionService")
+@Transactional(rollbackFor = Exception.class)
 public class PermissionServiceImpl extends BaseServiceImpl<PermissionDao, Permission> implements PermissionService {
-    @Autowired
+    @Resource
     private RoleService roleService;
 
-    @Autowired
+    @Resource
     private AdminUserDao adminUserDao;
 
 

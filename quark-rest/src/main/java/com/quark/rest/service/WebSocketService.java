@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 /**
  * @Author LHR
  * Create By 2017/9/6
@@ -13,16 +15,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class WebSocketService {
 
-    @Autowired
+    @Resource
     private RedisService<Integer> redisService;
 
-//    @Autowired
+//    @Resource
 //    private UserService userService;
 
-    @Autowired
+    @Resource
     private WebSocketController webSocketController;
 
-    @Autowired
+    @Resource
     private NotificationService notificationService;
 
     @Value("${REDIS_USERID_KEY}")

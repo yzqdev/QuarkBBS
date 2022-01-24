@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+
 /**
  * @Author : ChinaLHR
  * @Date : Create in 14:48 2017/10/24
@@ -29,7 +31,7 @@ import org.springframework.stereotype.Component;
 public class MessageHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>{
     private static final Logger logger = LoggerFactory.getLogger(MessageHandler.class);
 
-    @Autowired
+    @Resource
     private ChannelManager manager;
 
     @Override

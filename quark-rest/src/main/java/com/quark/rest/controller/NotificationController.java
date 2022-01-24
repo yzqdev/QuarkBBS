@@ -11,6 +11,7 @@ import com.quark.rest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -22,10 +23,10 @@ import java.util.List;
 @RestController
 public class NotificationController extends BaseController {
 
-    @Autowired
+    @Resource
     private NotificationService notificationService;
 
-    @Autowired
+    @Resource
     private UserService userService;
 
     //@ApiOperation("获取用户的通知消息")

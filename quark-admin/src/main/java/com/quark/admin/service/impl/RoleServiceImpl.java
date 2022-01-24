@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,7 +30,7 @@ import static java.util.stream.Collectors.toSet;
 @Transactional
 public class RoleServiceImpl extends BaseServiceImpl<RoleDao, Role> implements RoleService {
 
-    @Autowired
+    @Resource
     private AdminUserDao userService;
 
 

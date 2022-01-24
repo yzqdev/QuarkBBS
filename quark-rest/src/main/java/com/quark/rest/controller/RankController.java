@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -22,10 +23,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/rank")
 public class RankController extends BaseController {
-    @Autowired
+    @Resource
     private RankService rankService;
 
-    @Autowired
+    @Resource
     private RedisService<List<Object>> redisService;
 
     @Value("${REDIS_RANK_POSTS}")
