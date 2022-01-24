@@ -24,8 +24,8 @@ import java.util.stream.Collectors;
 /**
  * Created by lhr on 17-8-1.
  */
-@Service("permissionService")
-@Transactional(rollbackFor = Exception.class)
+@Service
+//@Transactional(rollbackFor = Exception.class)
 public class PermissionServiceImpl extends BaseServiceImpl<PermissionDao, Permission> implements PermissionService {
     @Resource
     private RoleService roleService;

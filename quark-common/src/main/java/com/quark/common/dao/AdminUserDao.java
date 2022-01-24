@@ -3,6 +3,7 @@ package com.quark.common.dao;
 import com.quark.common.entity.AdminUser;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,6 +16,7 @@ import java.util.List;
  * Created by lhr on 17-7-31.
  */
 @Repository
+@Primary
 @CacheConfig(cacheNames = "adminusers")
 public interface AdminUserDao extends JpaRepository<AdminUser,Integer>,JpaSpecificationExecutor {
 

@@ -27,7 +27,7 @@ import static java.util.stream.Collectors.toSet;
  * Created by lhr on 17-8-1.
  */
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class RoleServiceImpl extends BaseServiceImpl<RoleDao, Role> implements RoleService {
 
     @Resource

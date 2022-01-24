@@ -22,8 +22,6 @@ public class ShiroService {
     private ShiroFilterFactoryBean shiroFilterFactoryBean;
     @Resource
     private PermissionService permissionService;
-    @Resource
-    private RedisSessionDAO redisSessionDAO;
 
 
     /**
