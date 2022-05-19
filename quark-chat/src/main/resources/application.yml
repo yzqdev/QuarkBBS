@@ -39,15 +39,13 @@ spring:
         url: jdbc:postgresql://127.0.0.1:5432/quark_community?useUnicode=true&characterEncoding=UTF-8&useSSL=false
         username: postgresql
     jpa:
-        database: postgresql
+        database: POSTGRESQL
         hibernate:
             ddl-auto: update
             #      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
             naming:
                 physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
-        properties:
-            hibernate:
-                dialect: org.hibernate.dialect.MySQL5Dialect
+
         show-sql: true
     servlet:
         multipart:

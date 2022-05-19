@@ -40,7 +40,7 @@ spring:
       max-wait: 60000
       min-idle: 5
   jpa:
-    database: postgresql
+    database: POSTGRESQL
     hibernate:
       ddl-auto: update
 
