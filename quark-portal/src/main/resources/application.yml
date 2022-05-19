@@ -28,19 +28,19 @@ spring:
     timeout: 0
 
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: org.postgresql.Driver
 
     password: 123456
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://127.0.0.1:3306/quarkCommunity?useUnicode=true&characterEncoding=UTF-8&useSSL=false
-    username: root
+    url: jdbc:postgresql://127.0.0.1:5432/quark_community?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: postgres
     druid:
       initial-size: 5
       max-active: 30
       max-wait: 60000
       min-idle: 5
   jpa:
-    database: MYSQL
+    database: postgresql
     hibernate:
       ddl-auto: update
 

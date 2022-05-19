@@ -29,17 +29,17 @@ spring:
 
   datasource:
 
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: org.postgresql.Driver
     initialSize: 5
     maxActive: 20
     maxWait: 60000
     minIdle: 5
     password: 123456
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://127.0.0.1:3306/quarkCommunity?useUnicode=true&characterEncoding=UTF-8&useSSL=false
-    username: root
+    url: jdbc:postgresql://127.0.0.1:5432/quark_community?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: postgres
   jpa:
-    database: MYSQL
+    database: postgresql
     hibernate:
       ddl-auto: update
 #      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
